@@ -18,11 +18,14 @@ Currently unsupported features:
 ## Install 
 -------------------
 `git clone https://github.com/radiantmediaplayer/web-app-starter-kit-for-fire-tv.git`
+
 `npm install`
+
 `npm install -g serve`
 
 ## Gulp task
 `gulp build`: build all the projects
+
 `gulp watch`: useful for development
 
 ## Developing
@@ -34,8 +37,8 @@ Our main adaptation work is located in src/js/player-view-rmp.js. This is where 
 In addition to data available in genericMediaData.json (see src/projects/simple/genericMediaData.json) we have added some fields to support Radiant Media Player advanced features. All those new fields are optional.
 ```json
 	"adTagUrl": "https://www.radiantmediaplayer.com/vast/tags/inline-linear-1.xml",
-  "aspectRatio": 1.7777777778,
-  "live": true
+	"aspectRatio": 1.7777777778,
+	"live": true
 ```
 See src/projects/simple-rmp/rmpMediaData.json for an example.
 Those data relate to Radiant Media Player settings. See [Radiant Media Player docs](https://www.radiantmediaplayer.com/docs/latest/quick-start.html) for more info. 
