@@ -1,5 +1,4 @@
 # Web App Starter Kit for Fire TV using Radiant Media Player
--------------------
 **Radiant Media Player adaptation for the Amazon Web App Starter Kit for Fire TV is currently in development - feedback and issue reporting are welcome**
 
 This repository is a fork of Amazon [Web App Starter Kit for Fire TV](https://github.com/amzn/web-app-starter-kit-for-fire-tv) for using [Radiant Media Player](https://www.radiantmediaplayer.com/) when building a Fire TV app. Similar to the Youtube/Brightcove projects it shows through a fully-fledged example how to use Radiant Media Player in the Web App Starter Kit. 
@@ -15,8 +14,7 @@ Currently unsupported features:
 - DRM
 - Post-roll ads
 
-## Install 
--------------------
+## Install
 `git clone https://github.com/radiantmediaplayer/web-app-starter-kit-for-fire-tv.git`
 
 `npm install`
@@ -45,6 +43,7 @@ Those data relate to Radiant Media Player settings. See [Radiant Media Player do
 
 Below is the README for the [Web App Starter Kit for Fire TV](https://github.com/amzn/web-app-starter-kit-for-fire-tv) repository.
 
+-------------------
 # Web App Starter Kit for Fire TV
 -------------------
 
