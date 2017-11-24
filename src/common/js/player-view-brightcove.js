@@ -636,7 +636,7 @@
             }
         }.bind(this);
 
-    };
+    }
 
     exports.BrightcovePlayerView = BrightcovePlayerView;
 }(window));

@@ -1,3 +1,47 @@
+# Web App Starter Kit for Fire TV using Radiant Media Player
+-------------------
+**Radiant Media Player adaptation for the Amazon Web App Starter Kit for Fire TV is currently in development - feedback and issue reporting are welcome**
+
+This repository is a fork of Amazon [Web App Starter Kit for Fire TV](https://github.com/amzn/web-app-starter-kit-for-fire-tv) for using [Radiant Media Player](https://www.radiantmediaplayer.com/) when building a Fire TV app. Similar to the Youtube/Brightcove projects it shows through a fully-fledged example how to use Radiant Media Player in the Web App Starter Kit. 
+
+Supported features:
+- HLS and AES HLS streaming 
+- MP4 progressive download 
+- Live or on-demand video
+- Complete playlist example
+- Video ads
+
+Currently unsupported features:
+- DRM
+- Post-roll ads
+
+## Install 
+-------------------
+`git clone https://github.com/radiantmediaplayer/web-app-starter-kit-for-fire-tv.git`
+`npm install`
+`npm install -g serve`
+
+## Gulp task
+`gulp build`: build all the projects
+`gulp watch`: useful for development
+
+## Developing
+The project including Radiant Media Player is located at src/projects/simple-rmp/.
+Run `serve -p 3000` and go to out/simple-rmp/. Make changes while `gulp watch` is running and see them up when reloading.
+Our main adaptation work is located in src/js/player-view-rmp.js. This is where you can fine tune player settings (see this.initPlayer to understand how player settings are passed to the player).
+
+## Custom JSON for media data
+In addition to data available in genericMediaData.json (see src/projects/simple/genericMediaData.json) we have added some fields to support Radiant Media Player advanced features. All those new fields are optional.
+```json
+	"adTagUrl": "https://www.radiantmediaplayer.com/vast/tags/inline-linear-1.xml",
+  "aspectRatio": 1.7777777778,
+  "live": true
+```
+See src/projects/simple-rmp/rmpMediaData.json for an example.
+Those data relate to Radiant Media Player settings. See [Radiant Media Player docs](https://www.radiantmediaplayer.com/docs/latest/quick-start.html) for more info. 
+
+Below is the README for the [Web App Starter Kit for Fire TV](https://github.com/amzn/web-app-starter-kit-for-fire-tv) repository.
+
 # Web App Starter Kit for Fire TV
 -------------------
 

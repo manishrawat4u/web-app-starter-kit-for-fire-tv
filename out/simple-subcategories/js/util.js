@@ -118,7 +118,7 @@
             }.bind(this);
             $.ajax(requestData);
         }.bind(this);
-    };
+    }
 
     exports.Utils = Utils;
 }(window));

@@ -710,10 +710,10 @@
             playerView.on('videoStatus', this.handleVideoStatus, this);
             playerView.on('error', function(errType, errStack) {
                 var errorDialog;
-
+                var buttons;
                 switch (errType) {
                     case ErrorTypes.PLAYER_ERROR:
-                        var buttons = this.createOkButtonForErrorDialog(this.exitAppCallback);
+                        buttons = this.createOkButtonForErrorDialog(this.exitAppCallback);
                         errorDialog = errorHandler.createErrorDialog(errType.errTitle, errType.errToUser, buttons);
                         this.transitionToErrorDialog(errorDialog);
                         break;
@@ -724,7 +724,7 @@
                     case ErrorTypes.NETWORK_ERROR:
                     case ErrorTypes.HTML5_PLAYER_ERROR:
                     case ErrorTypes.EMBEDDED_PLAYER_ERROR:
-                        var buttons = this.createButtonsForErrorDialog(this.playerErrorOkCallback, this.playerErrorRetryCallback);
+                        buttons = this.createOkButtonForErrorDialog(this.playerErrorOkCallback);
                         errorDialog = errorHandler.createErrorDialog(errType.errTitle, errType.errToUser, buttons);
                         this.transitionToErrorDialog(errorDialog);
                         break;
@@ -805,7 +805,7 @@
                         callback : okCallback
                     }];
             return buttons;
-        }
+        };
 
         //create buttons for error dialog
         this.createButtonsForErrorDialog = function(okCallback, retryCallback) {

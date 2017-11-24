@@ -632,7 +632,7 @@ div {
   border-right: 1.2em solid #ffffff;
   border-bottom: 1.2em solid #ffffff;
   border-left: 1.2em solid #ffffff;
-  @include animation(spin 1.3s infinite linear);
+  @include animation(spinWask 1.3s infinite linear);
 }
 
 .content-load-spinner,
@@ -667,7 +667,7 @@ div {
     }
 }
 
-@-webkit-keyframes spin {
+@-webkit-keyframes spinWask {
   0% {
     @include transform(rotate(0deg));
   }
@@ -676,7 +676,7 @@ div {
   }
 }
 
-@keyframes spin {
+@keyframes spinWask {
   0% {
     @include transform(rotate(0deg));
   }
@@ -701,3 +701,13 @@ div {
     }
 }
 
+
+// RMP aspect ratio adjustment
+.rmp-container {
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
