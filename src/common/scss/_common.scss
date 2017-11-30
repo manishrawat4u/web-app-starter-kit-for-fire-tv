@@ -667,6 +667,10 @@ div {
     }
 }
 
+.rmp-black-bg {
+    background: #000;
+}
+
 @-webkit-keyframes spinWask {
   0% {
     @include transform(rotate(0deg));
@@ -699,15 +703,4 @@ div {
     .detail-row-container-buttons {
         bottom : 10px;
     }
-}
-
-
-// RMP aspect ratio adjustment
-.rmp-container {
-    top: 50%;
-    left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    -moz-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
 }

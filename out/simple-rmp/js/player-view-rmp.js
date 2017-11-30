@@ -28,14 +28,13 @@
         this.items = null;
         this.currentIndex = null;
         this.scriptLoaded = false;
-
         this.buttonDowntime = null;
         this.isSkipping = false;
         this.isFF = false;
         this.isRW = false;
 
         // rmp variables
-        this.debug = true;
+        this.debug = false;
         this.rmp = null;
         this.rmpContainer = null;
         this.destroyCompleted = false;
@@ -94,29 +93,23 @@
             if (this.debug) {
                 console.log('registerAdPlayerEvents');
             }
-
             this.rmpContainer.addEventListener('adloadererror', function () {
                 this.isAdPlaying = false;
                 this.updateTitleAndDescription(this.currentVideo.title, this.currentVideo.description);
             }.bind(this));
-
             this.rmpContainer.addEventListener('aderror', function () {
                 this.isAdPlaying = false;
                 this.updateTitleAndDescription(this.currentVideo.title, this.currentVideo.description);
             }.bind(this));
-
             this.rmpContainer.addEventListener('adstarted', function () {
                 this.isAdPlaying = true;
                 this.updateTitleAndDescription("Advertisement", "Your video will resume shortly.");
             }.bind(this));
-
-            this.rmpContainer.addEventListener('adcontentresumerequested', function () {
+            this.rmpContainer.addEventListener('addestroyed', function () {
                 this.isAdPlaying = false;
                 this.updateTitleAndDescription(this.currentVideo.title, this.currentVideo.description);
             }.bind(this));
-
         }.bind(this);
-
 
         /**
          * @function pauseEventHandler
@@ -128,12 +121,12 @@
             if (this.getCurrentTime() > 0 && this.getCurrentTime() !== this.getDuration()) {
                 this.trigger('videoStatus', this.getCurrentTime(), this.getDuration(), 'paused');
             }
-
         }.bind(this);
 
-        this.playEventHandler = function () {
-        }.bind(this);
-
+        /**
+         * @function setScriptTimeout
+         * @description Makes sure we have rmp.min.js script on page
+         */
         this.setScriptTimeout = function () {
             setTimeout(function () {
                 if (!this.scriptLoaded) {
@@ -166,7 +159,7 @@
          * @description handler for the 'durationchange' event
          */
         this.durationChangeHandler = function () {
-            if (this.hasValidTimeAndDuration() && this.getDuration() > -1) {
+            if (this.hasValidTimeAndDuration()) {
                 this.trigger('videoStatus', this.getCurrentTime(), this.getDuration(), 'durationChange');
                 this.durationFound = true;
             }
@@ -183,7 +176,6 @@
             if (this.previousTime !== this.getCurrentTime()) {
                 this.previousTime = this.getCurrentTime();
             }
-
             if (this.hasValidTimeAndDuration() && !this.isSkipping) {
                 this.buttonDowntime = this.getCurrentTime();
                 this.trigger('videoStatus', this.getCurrentTime(), this.getDuration(), 'playing');
@@ -199,8 +191,7 @@
             if (this.debug) {
                 console.log('errorHandler');
             }
-            var errType = ErrorTypes.EMBEDDED_PLAYER_ERROR;
-            this.trigger('error', errType, errorHandler.genStack());
+            this.trigger('error', ErrorTypes.EMBEDDED_PLAYER_ERROR, errorHandler.genStack());
         }.bind(this);
 
         /**
@@ -211,14 +202,15 @@
             if (this.debug) {
                 console.log('remove');
             }
+            $("#app-container").removeClass('rmp-black-bg');
             buttons.resetButtonIntervals();
-            this.rmp.destroy();
             this.rmpContainer.addEventListener('destroycompleted', function () {
                 this.rmpContainer.remove();
                 this.$el.remove();
                 this.rmpContainer = null;
                 this.destroyCompleted = true;
             }.bind(this));
+            this.rmp.destroy();
         }.bind(this);
 
         /**
@@ -283,18 +275,24 @@
                 bitrates.mp4 = [videoURL];
             }
             var settings = {
-                licenseKey: 'a2VpdWR5dHNobEAxNDg4ODkxNTQy',
+                licenseKey: 'your-license-key',
                 bitrates: bitrates,
+                poster: imgURL,
+                // the below are required settings to fit the Fire TV app environment
                 hideControls: true,
                 autoplay: true,
                 googleCast: false,
                 useNativeHlsOverMseHls: true,
                 disableKeyboardControl: true,
-                autoHeightMode: true,
-                poster: imgURL
+                autoHeightMode: true
             };
             if (adTagUrl) {
                 settings.ads = true;
+                // you could use the HTML5 IMA SDK but since Fire TV is not 
+                // official supported by the IMA SDK support cannot 
+                // be guaranteed - so we use rmp-vast instead which supports 
+                // Android WebView
+                settings.adParser = 'rmp-vast';
                 settings.adTagUrl = adTagUrl;
             }
             if (aspectRatio) {
@@ -310,8 +308,18 @@
             this.rmp = new RadiantMP(elementID);
             this.rmpContainer = document.getElementById(elementID);
             this.rmpContainer.addEventListener('ready', function () {
+                // when player is ready wire listeners
                 if (this.debug) {
                     console.log('ready');
+                }
+                $("#app-container").addClass('rmp-black-bg');
+                // handles non 16:9 ratio
+                var playerHeight = this.rmp.getPlayerHeight();
+                var screenHeight = window.screen.height;
+                if (typeof playerHeight === 'number' && typeof screenHeight === 'number') {
+                    if (playerHeight > 0 && screenHeight > 0 && screenHeight > playerHeight) {
+                        this.rmpContainer.style.top = ((screenHeight - playerHeight) / 2) + 'px';
+                    }
                 }
                 this.scriptLoaded = true;
                 this.rmpContainer.addEventListener("ended", this.videoEndedHandler);
@@ -319,10 +327,9 @@
                 this.rmpContainer.addEventListener("error", this.errorHandler);
                 this.rmpContainer.addEventListener("durationchange", this.durationChangeHandler);
                 this.rmpContainer.addEventListener("pause", this.pauseEventHandler);
-                this.rmpContainer.addEventListener("play", this.playEventHandler);
                 this.registerAdPlayerEvents();
             }.bind(this));
-            // Initialization ... test your page and done!
+            // Initialization
             this.rmp.init(settings);
         }.bind(this);
 
@@ -345,11 +352,10 @@
             var html = utils.buildTemplate($("#player-view-template"), video_data);
             $container.append(html);
             this.$el = $container.children().last();
-
             this.$containerControls = $container.find(".player-controls-container");
             this.containerControls = this.$containerControls[0];
 
-            // dynamically build the player video element
+            // dynamically append the Radiant Media Player container
             this.$el.append('<div id="rmpPlayer"></div>');
 
             this.scriptLoaded = false;
@@ -359,7 +365,9 @@
             var aspectRatio = this.items[index].aspectRatio;
             var isLive = this.items[index].live;
 
-            if (typeof RadiantMP === 'undefined') {
+            // if rmp.min.js is already on page we init 
+            // otherwise we load the lib
+            if (typeof RadiantMP === 'undefined') { 
                 var tag = document.createElement('script');
                 this.$el.append(tag);
                 tag.onload = function (url, img, adTag, ar, live) {
@@ -367,11 +375,17 @@
                     this.initPlayer(url, img, adTag, ar, live);
                 }.bind(this, videoURL, imgURL, adTagUrl, aspectRatio, isLive);
                 tag.type = "text/javascript";
-                tag.src = "https://cdn.radiantmediatechs.com/rmp/v4/latest/js/rmp.min.js";
+                if (this.debug) {
+                    tag.src = "https://cdn.radiantmediatechs.com/rmp/v4/latest/js/rmp.debug.js";
+                } else {
+                    tag.src = "https://cdn.radiantmediatechs.com/rmp/v4/latest/js/rmp.min.js";
+                }
             } else {
                 this.initPlayer(videoURL, imgURL, adTagUrl, aspectRatio, isLive);
             }
 
+            // start timeout to make sure RadiantMP global is available 
+            // fire error otherwise
             this.setScriptTimeout();
 
             this.controlsView = new ControlsView();
@@ -536,8 +550,8 @@
                     newPosition = 0;
                 }
             }
-
             this.trigger('videoStatus', this.buttonDowntime, this.getDuration(), 'playing');
+
             //Move the indicator while pressing down the skip buttons by updating buttonDownTime
             this.buttonDowntime = newPosition;
             this.trigger('videoStatus', this.buttonDowntime, this.getDuration(), 'seeking');

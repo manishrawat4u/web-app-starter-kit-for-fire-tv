@@ -2,7 +2,7 @@
     "media": [
         {
             "id": "rmp-1",
-            "title": "Luctus Et Ultrices Luctus Posuere Cubilia Luctus Curae Et Luctus Ultrices Posuere Cubilia Curae;",
+            "title": "BBB (MP4)",
             "pubDate": "Mon, 21 Apr 2014 04:55:06 GMT",
             "thumbURL": "https://www.radiantmediaplayer.com/media/playlist/poster/item-1-thumbnail.jpg",
             "imgURL": "https://www.radiantmediaplayer.com/media/playlist/poster/item-1.jpg",
@@ -15,7 +15,7 @@
         },
         {
             "id": "rmp-2",
-            "title": "Mauris A Nunc In At Pede",
+            "title": "ED (MP4)",
             "pubDate": "Fri, 18 Jan 2013 19:05:13 GMT",
             "thumbURL": "https://www.radiantmediaplayer.com/media/playlist/poster/item-2-thumbnail.jpg",
             "imgURL": "https://www.radiantmediaplayer.com/media/playlist/poster/item-2.jpg",
@@ -28,7 +28,7 @@
         },
         {
             "id": "rmp-3",
-            "title": "Ac Arcu Nunc",
+            "title": "Sintel (MP4) - 2.35 aspect ratio",
             "pubDate": "Sat, 29 Mar 2014 22:11:18 GMT",
             "thumbURL": "https://www.radiantmediaplayer.com/media/playlist/poster/item-3-thumbnail.jpg",
             "imgURL": "https://www.radiantmediaplayer.com/media/playlist/poster/item-3.jpg",
@@ -41,10 +41,22 @@
         },
         {
             "id": "rmp-4",
-            "title": "Urna Suscipit Nonummy",
-            "pubDate": "Mon, 10 Mar 2014 19:57:54 GMT",
+            "title": "Error (MP4)",
+            "pubDate": "Sat, 29 Mar 2014 22:11:18 GMT",
             "thumbURL": "https://www.radiantmediaplayer.com/media/playlist/poster/item-4-thumbnail.jpg",
             "imgURL": "https://www.radiantmediaplayer.com/media/playlist/poster/item-4.jpg",
+            "videoURL": "https://www.rmp-streaming.com/media/error.mp4",
+            "categories": [
+                "MP4"
+            ],
+            "description": "Sed eget lacus. mauris non dui nec urna suscipit nonummy. fusce fermentum fermentum arcu. vestibulum ante ipsum primis in faucibus orci luctus et ultrices"
+        },
+        {
+            "id": "rmp-5",
+            "title": "BBB (HLS)",
+            "pubDate": "Mon, 10 Mar 2014 19:57:54 GMT",
+            "thumbURL": "https://www.radiantmediaplayer.com/media/playlist/poster/item-5-thumbnail.jpg",
+            "imgURL": "https://www.radiantmediaplayer.com/media/playlist/poster/item-5.jpg",
             "videoURL": "https://dqwp3xzzbfhtw.cloudfront.net/vod/smil:bbb.smil/playlist.m3u8",
             "categories": [
                 "HLS"
@@ -53,11 +65,11 @@
             "aspectRatio": 1.7777777778
         },
         {
-            "id": "rmp-5",
-            "title": "Mi Pede, Nonummy Ut, Modestis In,",
+            "id": "rmp-6",
+            "title": "Ed (HLS)",
             "pubDate": "Sat, 06 Sep 2014 09:02:10 GMT",
-            "thumbURL": "https://www.radiantmediaplayer.com/media/playlist/poster/item-5-thumbnail.jpg",
-            "imgURL": "https://www.radiantmediaplayer.com/media/playlist/poster/item-5.jpg",
+            "thumbURL": "https://www.radiantmediaplayer.com/media/playlist/poster/item-6-thumbnail.jpg",
+            "imgURL": "https://www.radiantmediaplayer.com/media/playlist/poster/item-6.jpg",
             "videoURL": "https://dqwp3xzzbfhtw.cloudfront.net/vod/smil:ed.smil/playlist.m3u8",
             "categories": [
                 "HLS"
@@ -66,11 +78,11 @@
             "aspectRatio": 1.7777777778
         },
         {
-            "id": "rmp-6",
-            "title": "Habitant Morbi Tristique Senectus Et Netus",
+            "id": "rmp-7",
+            "title": "Sintel (HLS) - 2.35 aspect ratio",
             "pubDate": "Wed, 17 Jul 2013 02:00:23 GMT",
-            "thumbURL": "https://www.radiantmediaplayer.com/media/playlist/poster/item-6-thumbnail.jpg",
-            "imgURL": "https://www.radiantmediaplayer.com/media/playlist/poster/item-6.jpg",
+            "thumbURL": "https://www.radiantmediaplayer.com/media/playlist/poster/item-7-thumbnail.jpg",
+            "imgURL": "https://www.radiantmediaplayer.com/media/playlist/poster/item-7.jpg",
             "videoURL": "https://dqwp3xzzbfhtw.cloudfront.net/vod/smil:sintel-hd.smil/playlist.m3u8",
             "categories": [
                 "HLS"
@@ -79,11 +91,24 @@
             "aspectRatio": 2.35
         },
         {
-            "id": "rmp-7",
-            "title": "Habitant Morbi Tristique Senectus Et Netus",
+            "id": "rmp-8",
+            "title": "Error (HLS)",
             "pubDate": "Wed, 17 Jul 2013 02:00:23 GMT",
-            "thumbURL": "https://www.radiantmediaplayer.com/media/playlist/poster/item-7-thumbnail.jpg",
-            "imgURL": "https://www.radiantmediaplayer.com/media/playlist/poster/item-7.jpg",
+            "thumbURL": "https://www.radiantmediaplayer.com/media/playlist/poster/item-8-thumbnail.jpg",
+            "imgURL": "https://www.radiantmediaplayer.com/media/playlist/poster/item-8.jpg",
+            "videoURL": "https://dqwp3xzzbfhtw.cloudfront.net/vod/smil:error.smil/playlist.m3u8",
+            "categories": [
+                "HLS"
+            ],
+            "description": "Proin non massa non ante bibendum ullamcorper. duis cursus, diam at pretium aliquet, metus urna convallis erat, eget tincidunt dui augue eu",
+            "aspectRatio": 2.35
+        },
+        {
+            "id": "rmp-9",
+            "title": "BBB (AES-128 HLS)",
+            "pubDate": "Wed, 17 Jul 2013 02:00:23 GMT",
+            "thumbURL": "https://www.radiantmediaplayer.com/media/playlist/poster/item-9-thumbnail.jpg",
+            "imgURL": "https://www.radiantmediaplayer.com/media/playlist/poster/item-9.jpg",
             "videoURL": "https://www.rmp-streaming.com/media/rmp-segment/bbb-abr-aes/playlist.m3u8",
             "categories": [
                 "AESHLS"
@@ -92,11 +117,11 @@
             "aspectRatio": 1.7777777778
         },
         {
-            "id": "rmp-8",
-            "title": "Quis Turpis Vitae",
+            "id": "rmp-10",
+            "title": "Advertisement (inline-linear)",
             "pubDate": "Wed, 26 Feb 2014 22:51:04 GMT",
-            "thumbURL": "https://www.radiantmediaplayer.com/media/playlist/poster/item-8-thumbnail.jpg",
-            "imgURL": "https://www.radiantmediaplayer.com/media/playlist/poster/item-8.jpg",
+            "thumbURL": "https://www.radiantmediaplayer.com/media/playlist/poster/item-10-thumbnail.jpg",
+            "imgURL": "https://www.radiantmediaplayer.com/media/playlist/poster/item-10.jpg",
             "videoURL": "https://www.rmp-streaming.com/media/bbb-360p.mp4",
             "adTagUrl": "https://www.radiantmediaplayer.com/vast/tags/inline-linear-1.xml",
             "categories": [
@@ -106,11 +131,11 @@
             "aspectRatio": 1.7777777778
         },
         {
-            "id": "rmp-9",
-            "title": "Lorem Vitae Odio",
+            "id": "rmp-11",
+            "title": "Advertisement (inline-linear-skippable)",
             "pubDate": "Tue, 23 Sep 2014 15:13:38 GMT",
-            "thumbURL": "https://www.radiantmediaplayer.com/media/playlist/poster/item-9-thumbnail.jpg",
-            "imgURL": "https://www.radiantmediaplayer.com/media/playlist/poster/item-9.jpg",
+            "thumbURL": "https://www.radiantmediaplayer.com/media/playlist/poster/item-1-thumbnail.jpg",
+            "imgURL": "https://www.radiantmediaplayer.com/media/playlist/poster/item-1.jpg",
             "videoURL": "https://dqwp3xzzbfhtw.cloudfront.net/vod/smil:bbb.smil/playlist.m3u8",
             "adTagUrl": "https://www.radiantmediaplayer.com/vast/tags/inline-linear-skippable.xml",
             "categories": [
@@ -120,28 +145,42 @@
             "aspectRatio": 1.7777777778
         },
         {
-            "id": "rmp-10",
-            "title": "Quis Turpis Vitae",
-            "pubDate": "Wed, 26 Feb 2014 22:51:04 GMT",
-            "thumbURL": "https://www.radiantmediaplayer.com/media/playlist/poster/item-10-thumbnail.jpg",
-            "imgURL": "https://www.radiantmediaplayer.com/media/playlist/poster/item-10.jpg",
-            "videoURL": "https://www.rmp-streaming.com/media/bbb-360p.mp4",
-            "adTagUrl": "https://www.radiantmediaplayer.com/vast/tags/vmap.xml",
+            "id": "rmp-12",
+            "title": "Advertisement (inline-non-linear)",
+            "pubDate": "Tue, 23 Sep 2014 15:13:38 GMT",
+            "thumbURL": "https://www.radiantmediaplayer.com/media/playlist/poster/item-2-thumbnail.jpg",
+            "imgURL": "https://www.radiantmediaplayer.com/media/playlist/poster/item-2.jpg",
+            "videoURL": "https://dqwp3xzzbfhtw.cloudfront.net/vod/smil:bbb.smil/playlist.m3u8",
+            "adTagUrl": "https://www.radiantmediaplayer.com/vast/tags/non-linear.xml",
             "categories": [
                 "Ads"
             ],
-            "description": "Et netus et malesuada fames ac turpis egestas. fusce aliquet magna a neque. nullam ut nisi a odio semper cursus. integer mollis. integer tincidunt aliquam arcu. aliquam ultrices iaculis odio. nam interdum enim",
+            "description": "Pede, nonummy ut, Modestis in, tempus eu, ligula. aenean euismod mauris eu elit. nulla facilisi. sed neque. sed eget lacus. mauris non dui nec urna suscipit nonummy. fusce fermentum",
             "aspectRatio": 1.7777777778
         },
         {
-            "id": "rmp-11",
-            "title": "Quis Turpis Vitae",
+            "id": "rmp-13",
+            "title": "Advertisement (error)",
+            "pubDate": "Tue, 23 Sep 2014 15:13:38 GMT",
+            "thumbURL": "https://www.radiantmediaplayer.com/media/playlist/poster/item-3-thumbnail.jpg",
+            "imgURL": "https://www.radiantmediaplayer.com/media/playlist/poster/item-3.jpg",
+            "videoURL": "https://dqwp3xzzbfhtw.cloudfront.net/vod/smil:bbb.smil/playlist.m3u8",
+            "adTagUrl": "https://www.radiantmediaplayer.com/vast/tags/error.xml",
+            "categories": [
+                "Ads"
+            ],
+            "description": "Pede, nonummy ut, Modestis in, tempus eu, ligula. aenean euismod mauris eu elit. nulla facilisi. sed neque. sed eget lacus. mauris non dui nec urna suscipit nonummy. fusce fermentum",
+            "aspectRatio": 1.7777777778
+        },
+        {
+            "id": "rmp-14",
+            "title": "BBB (Live HLS)",
             "pubDate": "Wed, 26 Feb 2014 22:51:04 GMT",
             "thumbURL": "https://www.radiantmediaplayer.com/images/poster-rmp-live.jpg",
-            "imgURL": "https://www.radiantmediaplayer.com/images/poster-rmp-live.jpg", 
+            "imgURL": "https://www.radiantmediaplayer.com/images/poster-rmp-live.jpg",
             "videoURL": "https://dqwp3xzzbfhtw.cloudfront.net/testlive/smil:live.smil/playlist.m3u8",
             "categories": [
-                "Live" 
+                "Live"
             ],
             "description": "Et netus et malesuada fames ac turpis egestas. fusce aliquet magna a neque. nullam ut nisi a odio semper cursus. integer mollis. integer tincidunt aliquam arcu. aliquam ultrices iaculis odio. nam interdum enim",
             "aspectRatio": 1.7777777778,

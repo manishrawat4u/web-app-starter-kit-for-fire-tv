@@ -8,7 +8,7 @@ Supported features:
 - MP4 progressive download 
 - Live or on-demand video
 - Complete playlist example
-- Video ads
+- Video ads (rmp-vast)
 
 Currently unsupported features:
 - DRM
@@ -28,15 +28,30 @@ Currently unsupported features:
 
 ## Developing
 The project including Radiant Media Player is located at src/projects/simple-rmp/.
-Run `serve -p 3000` and go to out/simple-rmp/. Make changes while `gulp watch` is running and see them up when reloading.
-Our main adaptation work is located in src/js/player-view-rmp.js. This is where you can fine tune player settings (see this.initPlayer to understand how player settings are passed to the player).
+
+To see it live run `serve -p 3000` and go to out/simple-rmp/. 
+
+Make changes while `gulp watch` is running and see them up when reloading.
+
+Our main adaptation work is located in src/js/player-view-rmp.js. This is where you can fine tune player settings to fit your project requirement (see this.initPlayer function to understand how player settings are passed to the player).
+
+## Required player settings
+In order to fit the Fire TV app environment the following player settings are mandatory:
+```javascript
+hideControls: true,
+autoplay: true,
+googleCast: false,
+useNativeHlsOverMseHls: true,
+disableKeyboardControl: true,
+autoHeightMode: true
+```
 
 ## Custom JSON for media data
 In addition to data available in genericMediaData.json (see src/projects/simple/genericMediaData.json) we have added some fields to support Radiant Media Player advanced features. All those new fields are optional.
 ```json
-	"adTagUrl": "https://www.radiantmediaplayer.com/vast/tags/inline-linear-1.xml",
-	"aspectRatio": 1.7777777778,
-	"live": true
+"adTagUrl": "https://www.radiantmediaplayer.com/vast/tags/inline-linear-1.xml",
+"aspectRatio": 1.7777777778,
+"live": true
 ```
 See src/projects/simple-rmp/rmpMediaData.json for an example.
 Those data relate to Radiant Media Player settings. See [Radiant Media Player docs](https://www.radiantmediaplayer.com/docs/latest/quick-start.html) for more info. 
