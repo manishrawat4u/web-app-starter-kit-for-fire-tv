@@ -39,6 +39,8 @@ Make changes while `gulp watch` is running and see them up when reloading.
 
 Our main adaptation work is located in src/js/player-view-rmp.js. This is where you can fine tune player settings to fit your project requirement (see this.initPlayer function to understand how player settings are passed to the player).
 
+You will need to use your Radiant Media Player license key (RMP Edition or PLATFORM Edition will work - see around line 297 in src/js/player-view-rmp.js) for the example to operate.
+
 For debug logs go to around line 37 in src/js/player-view-rmp.js and set `this.debug = true;`.
 
 Before going to production you will need to test your app with [the Amazon Web App Tester](https://developer.amazon.com/docs/html5-web-apps/webapp-app-tester.html) to insure it renders correctly on a Fire OS device.
