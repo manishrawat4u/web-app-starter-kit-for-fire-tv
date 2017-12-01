@@ -1,18 +1,22 @@
 # Web App Starter Kit for Fire TV using Radiant Media Player
-**Radiant Media Player adaptation for the Amazon Web App Starter Kit for Fire TV is currently in development - feedback and issue reporting are welcome**
 
 This repository is a fork of Amazon [Web App Starter Kit for Fire TV](https://github.com/amzn/web-app-starter-kit-for-fire-tv) for using [Radiant Media Player](https://www.radiantmediaplayer.com/) when building a Fire TV app. Similar to the Youtube/Brightcove projects it shows through a fully-fledged example how to use Radiant Media Player in the Web App Starter Kit. 
+
+Scope of support:
+- Fire TV devices with Fire OS 5+
 
 Supported features:
 - HLS and AES HLS streaming 
 - MP4 progressive download 
 - Live or on-demand video
+- Video ads through open source [rmp-vast](https://github.com/radiantmediaplayer/rmp-vast) parser: linear pre-roll and non-linear ads
 - Complete playlist example
-- Video ads (rmp-vast)
 
 Currently unsupported features:
 - DRM
-- Post-roll ads
+- VTT captions
+- Multi-audio tracks
+- 360 video
 
 ## Install
 `git clone https://github.com/radiantmediaplayer/web-app-starter-kit-for-fire-tv.git`
@@ -29,11 +33,15 @@ Currently unsupported features:
 ## Developing
 The project including Radiant Media Player is located at src/projects/simple-rmp/.
 
-To see it live run `serve -p 3000` and go to out/simple-rmp/. 
+To see it live run `serve -p 3000` and go to out/simple-rmp/. with your favorite browser.
 
 Make changes while `gulp watch` is running and see them up when reloading.
 
 Our main adaptation work is located in src/js/player-view-rmp.js. This is where you can fine tune player settings to fit your project requirement (see this.initPlayer function to understand how player settings are passed to the player).
+
+For debug logs go to around line 37 in src/js/player-view-rmp.js and set `this.debug = true;`.
+
+Before going to production you will need to test your app with [the Amazon Web App Tester](https://developer.amazon.com/docs/html5-web-apps/webapp-app-tester.html) to insure it renders correctly on a Fire OS device.
 
 ## Required player settings
 In order to fit the Fire TV app environment the following player settings are mandatory:
@@ -41,16 +49,15 @@ In order to fit the Fire TV app environment the following player settings are ma
 hideControls: true,
 autoplay: true,
 googleCast: false,
-useNativeHlsOverMseHls: true,
 disableKeyboardControl: true,
-autoHeightMode: true
+iframeMode: true,
+iframeAllowed: true
 ```
 
 ## Custom JSON for media data
-In addition to data available in genericMediaData.json (see src/projects/simple/genericMediaData.json) we have added some fields to support Radiant Media Player advanced features. All those new fields are optional.
+In addition to data available in genericMediaData.json (see src/projects/simple/genericMediaData.json) we have added some fields to support Radiant Media Player advanced features. Those new fields are optional.
 ```json
 "adTagUrl": "https://www.radiantmediaplayer.com/vast/tags/inline-linear-1.xml",
-"aspectRatio": 1.7777777778,
 "live": true
 ```
 See src/projects/simple-rmp/rmpMediaData.json for an example.

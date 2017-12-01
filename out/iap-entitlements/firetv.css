@@ -686,9 +686,6 @@ div {
     justify-content: center;
     display: flex; }
 
-.rmp-black-bg {
-  background: #000; }
-
 @-webkit-keyframes spinWask {
   0% {
     -webkit-transform: rotate(0deg);

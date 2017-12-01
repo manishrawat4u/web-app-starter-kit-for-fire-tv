@@ -57,6 +57,12 @@
             }
             return -1;
         }.bind(this);
+        this.rmpLog = function (message) {
+            if (typeof window.console !== 'undefined' && message) {
+                console.log('RMP-WASK: ' + message);
+            }
+        };
+        this.NON_LINEAR_AD_TIMEOUT = 20000;
 
         //constants
         this.SCRIPT_TIMEOUT = 30000;
@@ -91,7 +97,7 @@
          */
         this.registerAdPlayerEvents = function () {
             if (this.debug) {
-                console.log('registerAdPlayerEvents');
+                this.rmpLog('registerAdPlayerEvents');
             }
             this.rmpContainer.addEventListener('adloadererror', function () {
                 this.isAdPlaying = false;
@@ -102,8 +108,22 @@
                 this.updateTitleAndDescription(this.currentVideo.title, this.currentVideo.description);
             }.bind(this));
             this.rmpContainer.addEventListener('adstarted', function () {
+                if (!this.rmp.getAdOnStage()) {
+                    return;
+                }
                 this.isAdPlaying = true;
-                this.updateTitleAndDescription("Advertisement", "Your video will resume shortly.");
+                if (!this.rmp.getAdLinear()) {
+                    // we have a non-linear ad - we need to remove it after NON_LINEAR_AD_TIMEOUT (default to 20s)
+                    // otherwise it may never go off since user interactions are limited on Fire TV
+                    setTimeout(function () {
+                        // we still have our non-linear ad on stage - we need to remove it
+                        if (this.rmp && this.rmp.getAdOnStage() && !this.rmp.getAdLinear()) {
+                            this.rmp.stopAds();
+                        }
+                    }.bind(this), this.NON_LINEAR_AD_TIMEOUT);
+                } else {
+                    this.updateTitleAndDescription("Advertisement", "Your video will resume shortly.");
+                }
             }.bind(this));
             this.rmpContainer.addEventListener('addestroyed', function () {
                 this.isAdPlaying = false;
@@ -171,7 +191,7 @@
          */
         this.timeUpdateHandler = function () {
             if (this.debug) {
-                console.log('timeUpdateHandler');
+                this.rmpLog('timeUpdateHandler');
             }
             if (this.previousTime !== this.getCurrentTime()) {
                 this.previousTime = this.getCurrentTime();
@@ -189,7 +209,7 @@
          */
         this.errorHandler = function (e) {
             if (this.debug) {
-                console.log('errorHandler');
+                this.rmpLog('errorHandler');
             }
             this.trigger('error', ErrorTypes.EMBEDDED_PLAYER_ERROR, errorHandler.genStack());
         }.bind(this);
@@ -200,9 +220,8 @@
          */
         this.remove = function () {
             if (this.debug) {
-                console.log('remove');
+                this.rmpLog('remove');
             }
-            $("#app-container").removeClass('rmp-black-bg');
             buttons.resetButtonIntervals();
             this.rmpContainer.addEventListener('destroycompleted', function () {
                 this.rmpContainer.remove();
@@ -219,7 +238,7 @@
          */
         this.hide = function () {
             if (this.debug) {
-                console.log('hide');
+                this.rmpLog('hide');
             }
             this.$el.css("visibility", "hidden");
         }.bind(this);
@@ -230,7 +249,7 @@
          */
         this.show = function () {
             if (this.debug) {
-                console.log('show');
+                this.rmpLog('show');
             }
             this.$el.css("visibility", "");
             if (this.durationFound) {
@@ -245,7 +264,7 @@
          */
         this.updateTitleAndDescription = function (title, description) {
             if (this.debug) {
-                console.log('updateTitleAndDescription');
+                this.rmpLog('updateTitleAndDescription');
             }
             if (this.controlsView) {
                 this.controlsView.updateTitleAndDescription(title, description);
@@ -262,9 +281,9 @@
         }.bind(this);
 
 
-        this.initPlayer = function (videoURL, imgURL, adTagUrl, aspectRatio, isLive) {
+        this.initPlayer = function (videoURL, imgURL, adTagUrl, isLive) {
             if (this.debug) {
-                console.log('initPlayer');
+                this.rmpLog('initPlayer');
             }
             // Then we set our player settings
             var hlsPattern = /\.m3u8/i;
@@ -282,9 +301,9 @@
                 hideControls: true,
                 autoplay: true,
                 googleCast: false,
-                useNativeHlsOverMseHls: true,
                 disableKeyboardControl: true,
-                autoHeightMode: true
+                iframeMode: true,
+                iframeAllowed: true
             };
             if (adTagUrl) {
                 settings.ads = true;
@@ -292,11 +311,10 @@
                 // official supported by the IMA SDK support cannot 
                 // be guaranteed - so we use rmp-vast instead which supports 
                 // Android WebView
+                // VPAID should be disabled to avoid interactivity or content recovery issues
                 settings.adParser = 'rmp-vast';
                 settings.adTagUrl = adTagUrl;
-            }
-            if (aspectRatio) {
-                settings.autoHeightModeRatio = aspectRatio;
+                settings.adRmpVastEnableVpaid = false;
             }
             if (isLive) {
                 settings.isLive = true;
@@ -310,16 +328,7 @@
             this.rmpContainer.addEventListener('ready', function () {
                 // when player is ready wire listeners
                 if (this.debug) {
-                    console.log('ready');
-                }
-                $("#app-container").addClass('rmp-black-bg');
-                // handles non 16:9 ratio
-                var playerHeight = this.rmp.getPlayerHeight();
-                var screenHeight = window.screen.height;
-                if (typeof playerHeight === 'number' && typeof screenHeight === 'number') {
-                    if (playerHeight > 0 && screenHeight > 0 && screenHeight > playerHeight) {
-                        this.rmpContainer.style.top = ((screenHeight - playerHeight) / 2) + 'px';
-                    }
+                    this.rmpLog('ready');
                 }
                 this.scriptLoaded = true;
                 this.rmpContainer.addEventListener("ended", this.videoEndedHandler);
@@ -342,7 +351,7 @@
          */
         this.render = function ($container, data, index) {
             if (this.debug) {
-                console.log('render');
+                this.rmpLog('render');
             }
             // Build the main content template and add it
             this.items = data;
@@ -362,18 +371,17 @@
             var videoURL = this.items[index].videoURL;
             var imgURL = this.items[index].imgURL;
             var adTagUrl = this.items[index].adTagUrl;
-            var aspectRatio = this.items[index].aspectRatio;
             var isLive = this.items[index].live;
 
             // if rmp.min.js is already on page we init 
             // otherwise we load the lib
-            if (typeof RadiantMP === 'undefined') { 
+            if (typeof RadiantMP === 'undefined') {
                 var tag = document.createElement('script');
                 this.$el.append(tag);
-                tag.onload = function (url, img, adTag, ar, live) {
+                tag.onload = function (url, img, adTag, live) {
                     tag.onload = null;
-                    this.initPlayer(url, img, adTag, ar, live);
-                }.bind(this, videoURL, imgURL, adTagUrl, aspectRatio, isLive);
+                    this.initPlayer(url, img, adTag, live);
+                }.bind(this, videoURL, imgURL, adTagUrl, isLive);
                 tag.type = "text/javascript";
                 if (this.debug) {
                     tag.src = "https://cdn.radiantmediatechs.com/rmp/v4/latest/js/rmp.debug.js";
@@ -381,7 +389,7 @@
                     tag.src = "https://cdn.radiantmediatechs.com/rmp/v4/latest/js/rmp.min.js";
                 }
             } else {
-                this.initPlayer(videoURL, imgURL, adTagUrl, aspectRatio, isLive);
+                this.initPlayer(videoURL, imgURL, adTagUrl, isLive);
             }
 
             // start timeout to make sure RadiantMP global is available 
@@ -399,7 +407,7 @@
          */
         this.pauseAd = function () {
             if (this.debug) {
-                console.log('pauseAd');
+                this.rmpLog('pauseAd');
             }
             if (this.rmp) {
                 this.rmp.pause();
@@ -412,7 +420,7 @@
          */
         this.resumeAd = function () {
             if (this.debug) {
-                console.log('resumeAd');
+                this.rmpLog('resumeAd');
             }
             if (this.rmp) {
                 this.rmp.play();
@@ -428,7 +436,7 @@
          */
         this.playVideo = function () {
             if (this.debug) {
-                console.log('playVideo');
+                this.rmpLog('playVideo');
             }
             if (this.rmp) {
                 this.rmp.play();
@@ -447,7 +455,7 @@
          */
         this.pauseVideo = function () {
             if (this.debug) {
-                console.log('pauseVideo');
+                this.rmpLog('pauseVideo');
             }
             if (this.rmp) {
                 this.rmp.pause();
@@ -460,7 +468,7 @@
          */
         this.resumeVideo = function () {
             if (this.debug) {
-                console.log('resumeVideo');
+                this.rmpLog('resumeVideo');
             }
             if (this.rmp) {
                 this.rmp.play();
@@ -481,7 +489,7 @@
                 return;
             }
             if (this.debug) {
-                console.log('seekVideo');
+                this.rmpLog('seekVideo');
             }
             if (this.hasValidTimeAndDuration()) {
                 this.controlsView.continuousSeek = false;
@@ -520,6 +528,9 @@
         this.seekVideoRepeat = function (direction) {
             if (this.isLive) {
                 return;
+            }
+            if (this.debug) {
+                this.rmpLog('seekVideoRepeat');
             }
             this.controlsView.continuousSeek = true;
             var newPosition = null;
@@ -564,6 +575,9 @@
         this.seekVideoFinal = function () {
             if (this.isLive) {
                 return;
+            }
+            if (this.debug) {
+                this.rmpLog('seekVideoFinal');
             }
             if (this.isFF) {
                 this.buttonDowntime = this.buttonDowntime !== this.getDuration() ? this.buttonDowntime - this.skipLength : this.buttonDowntime;
