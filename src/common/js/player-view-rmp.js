@@ -307,8 +307,8 @@
             };
             if (adTagUrl) {
                 settings.ads = true;
-                // you could use the HTML5 IMA SDK but since Fire TV is not 
-                // official supported by the IMA SDK support cannot 
+                // you could use the HTML5 Goolge IMA SDK but since Fire TV is not 
+                // officially supported by Google, support cannot 
                 // be guaranteed - so we use rmp-vast instead which supports 
                 // Android WebView
                 // VPAID should be disabled to avoid interactivity or content recovery issues

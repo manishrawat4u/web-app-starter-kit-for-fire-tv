@@ -9,7 +9,7 @@ Supported features:
 - HLS and AES HLS streaming 
 - MP4 progressive download 
 - Live or on-demand video
-- Video ads through open source [rmp-vast](https://github.com/radiantmediaplayer/rmp-vast) parser: linear pre-roll and non-linear ads
+- Video ads 
 - Complete playlist example
 
 Currently unsupported features:
@@ -37,11 +37,11 @@ To see it live run `serve -p 3000` and go to out/simple-rmp/. with your favorite
 
 Make changes while `gulp watch` is running and see them up when reloading.
 
-Our main adaptation work is located in src/js/player-view-rmp.js. This is where you can fine tune player settings to fit your project requirement (see this.initPlayer function to understand how player settings are passed to the player).
+Our main adaptation work is located in src/common/js/player-view-rmp.js. This is where you can fine tune player settings to fit your project requirement (see this.initPlayer function to understand how player settings are passed to the player).
 
-You will need to use your Radiant Media Player license key (RMP Edition or PLATFORM Edition will work - see around line 297 in src/js/player-view-rmp.js) for the example to operate.
+You will need to use your Radiant Media Player license key (RMP Edition or PLATFORM Edition will work - see around line 297 in src/common/js/player-view-rmp.js) for the example to operate.
 
-For debug logs go to around line 37 in src/js/player-view-rmp.js and set `this.debug = true;`.
+For debug logs go to around line 37 in src/common/js/player-view-rmp.js and set `this.debug = true;`.
 
 Before going to production you will need to test your app with [the Amazon Web App Tester](https://developer.amazon.com/docs/html5-web-apps/webapp-app-tester.html) to insure it renders correctly on a Fire OS device.
 
@@ -55,6 +55,11 @@ disableKeyboardControl: true,
 iframeMode: true,
 iframeAllowed: true
 ```
+
+## Video ads scope of support
+We support using video ads in a Fire TV apps through our open source [rmp-vast](https://github.com/radiantmediaplayer/rmp-vast) parser. It should be noted that using the Google IMA SDK within a Fire TV is not an officially supported use-case by Google and while it remains technically possible to use it, it remains untested by Radiant Media Player team. 
+Using ads from Google network (DFP, AdSense, AdX ...) generally requires using the IMA SDK and as such we cannot guarentee those ads will render correctly in a Fire TV app.
+
 
 ## Custom JSON for media data
 In addition to data available in genericMediaData.json (see src/projects/simple/genericMediaData.json) we have added some fields to support Radiant Media Player advanced features. Those new fields are optional.
